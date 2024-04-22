@@ -1,10 +1,14 @@
 import requests
 import urllib.parse
+import folium
+import polyline
+import sys
+import os
 
 route_url = "https://graphhopper.com/api/1/route?"
 loc1 = "Washington, D.C."
 loc2 = "Baltimore, Maryland"
-key = "1ec33ae9-33e3-4f60-8585-71b11339918d"  ### Replace with your API key
+key = "1ec33ae9-33e3-4f60-8585-71b11339918d"
 
 
 def generate_osm_link(lat, lng):
@@ -101,12 +105,44 @@ while True:
 
         paths_url = (
             route_url
-            + urllib.parse.urlencode({"key": key, "vehicle": vehicle})
+            + urllib.parse.urlencode({"key": key, "vehicle": vehicle, "optimize": "true"})
             + op
             + dp
         )
         paths_status = requests.get(paths_url).status_code
         paths_data = requests.get(paths_url).json()
+
+        # Extract polyline points
+        encoded_points = paths_data["paths"][0]["points"]
+
+        # Decode polyline points
+        decoded_points = polyline.decode(encoded_points)
+
+        # Create map
+        mymap = folium.Map(location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15)
+
+        # Add markers for waypoints
+        for point in decoded_points:
+            folium.Marker(location=[point[0], point[1]]).add_to(mymap)
+
+        # Add polyline to represent the route
+        folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
+
+        # Add instructions as popups
+        for instruction in paths_data["paths"][0]["instructions"]:
+            folium.Marker(
+            location=[decoded_points[instruction["interval"][0]][0], decoded_points[instruction["interval"][0]][1]],
+            popup=instruction["text"],
+            icon=folium.Icon(color="red", icon="info-sign")
+            ).add_to(mymap)
+
+        # Save the map to an HTML file
+        mymap.save("route_map_with_instructions.html")
+        if sys.platform.startswith('win'):
+            os.system(f"start route_map_with_instructions.html")
+        else:
+            os.system(f"open route_map_with_instructions.html")
+
         print(
             "Routing API Status: "
             + str(paths_status)
