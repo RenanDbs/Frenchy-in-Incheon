@@ -65,8 +65,15 @@ def geocoding(location, key):
     return json_status, lat, lng, new_loc
 
 
+def calculate_midpoint(coord1, coord2):
+    mid_lat = (coord1[0] + coord2[0]) / 2
+    mid_lng = (coord1[1] + coord2[1]) / 2
+    return mid_lat, mid_lng
+
+
 while True:
-    print("\n+++++++++++++++++++++++++++++++++++++++++++++")
+    waypoints = input("Do you want to display waypoints? (yes/no): ")
+    print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("Vehicle profiles available on Graphhopper:")
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("car, bike, foot")
@@ -94,8 +101,12 @@ while True:
         break
     print("=================================================")
     if orig[0] == 200 and dest[0] == 200:
-        op = "&point=" + str(orig[1]) + "%2C" + str(orig[2])
-        dp = "&point=" + str(dest[1]) + "%2C" + str(dest[2])
+        op = f"&point={orig[1]},{orig[2]}"  # Origin point
+        dp = f"&point={dest[1]},{dest[2]}"  # Destination point
+
+        route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
+        midpoint = calculate_midpoint((orig[1], orig[2]), (dest[1], dest[2]))
+        mp = f"&point={midpoint[0]},{midpoint[1]}"  # Midpoint (checkpoint)
 
         if tunnel == "Yes":
             custom_model = {
@@ -161,33 +172,65 @@ while True:
         # Extract polyline points
         encoded_points = paths_data["paths"][0]["points"]
 
-        # Decode polyline points
-        decoded_points = polyline.decode(encoded_points)
+        full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}"
 
-        # Create map
-        mymap = folium.Map(location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15)
+        paths_url = (
+            route_url
+            + urllib.parse.urlencode(
+                {"key": key, "profile": vehicle, "optimize": "true"}
+            )
+            + op
+            + mp
+            + dp
+        )
+        paths_status = requests.get(paths_url).status_code
+        paths_data = requests.get(paths_url).json()
+
+        if "paths" in paths_data:
+            # Extract polyline points
+            encoded_points = paths_data["paths"][0]["points"]
+
+
+            # Decode polyline points
+            decoded_points = polyline.decode(encoded_points)
+
+            # Create map
+            mymap = folium.Map(
+                location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15
+            )
+
+            folium.PolyLine(locations=decoded_points, color="blue").add_to(mymap)
 
         # Add markers for waypoints
-        # for point in decoded_points:
-        #     folium.Marker(location=[point[0], point[1]]).add_to(mymap)
+            if waypoints == "yes":
+                for point in decoded_points:
+                    folium.Marker(location=[point[0], point[1]]).add_to(mymap)
 
-        # Add polyline to represent the route
-        folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
-
-        # Add instructions as popups
-        for instruction in paths_data["paths"][0]["instructions"]:
+            # Add special marker for the midpoint
             folium.Marker(
-            location=[decoded_points[instruction["interval"][0]][0], decoded_points[instruction["interval"][0]][1]],
-            popup=instruction["text"],
-            icon=folium.Icon(color="red", icon="info-sign")
+                location=[midpoint[0], midpoint[1]],
+                popup="Midpoint",
+                icon=folium.Icon(color="green"),
             ).add_to(mymap)
 
-        # Save the map to an HTML file
-        mymap.save("route_map_with_instructions.html")
-        if sys.platform.startswith('win'):
-            os.system(f"start route_map_with_instructions.html")
-        else:
-            os.system(f"open route_map_with_instructions.html")
+            # Add instructions as popups
+            for instruction in paths_data["paths"][0]["instructions"]:
+                folium.Marker(
+                    location=[
+                        decoded_points[instruction["interval"][0]][0],
+                        decoded_points[instruction["interval"][0]][1],
+                    ],
+                    popup=instruction["text"],
+                    icon=folium.Icon(color="red", icon="info-sign"),
+                ).add_to(mymap)
+
+            # Save the map to an HTML file
+            mymap.save("route_map_with_instructions.html")
+            if sys.platform.startswith("win"):
+                os.system(f"start route_map_with_instructions.html")
+            else:
+                os.system(f"open route_map_with_instructions.html")
+
 
         print("=================================================")
         print("Directions from " + orig[3] + " to " + dest[3] + " by " + vehicle)
@@ -200,24 +243,36 @@ while True:
             hr = int(paths_data["paths"][0]["time"] / 1000 / 60 / 60)
             print("Distance Traveled: {0:.1f} miles / {1:.1f} km".format(miles, km))
             print("Trip Duration: {0:02d}:{1:02d}:{2:02d}".format(hr, min, sec))
-            print("=================================================")
-            for each in range(len(paths_data["paths"][0]["instructions"])):
-                path = paths_data["paths"][0]["instructions"][each]["text"]
-                distance = paths_data["paths"][0]["instructions"][each]["distance"]
-                print(
-                    "{0} ( {1:.1f} km / {2:.1f} miles )".format(
-                        path, distance / 1000, distance / 1000 / 1.61
-                    )
-                )
-                print("=================================================")
-        else:
-            print("Error message: " + paths_data["message"])
-            print("*************************************************")
-        orig_osm_link = generate_osm_link(orig[1], orig[2])
-        dest_osm_link = generate_osm_link(dest[1], dest[2])
 
-        print("=================================================")
-        print("OpenStreetMap link for starting point:", orig_osm_link)
-        print("OpenStreetMap link for destination point:", dest_osm_link)
-        print("=================================================")
-        print("OpenStreetMap link for the entire route:", full_route_osm_link)
+            print("=================================================")
+            print("Directions from " + orig[3] + " to " + dest[3] + " by " + vehicle)
+            print("=================================================")
+            if paths_status == 200:
+                miles = (paths_data["paths"][0]["distance"]) / 1000 / 1.61
+                km = (paths_data["paths"][0]["distance"]) / 1000
+                sec = int(paths_data["paths"][0]["time"] / 1000 % 60)
+                min = int(paths_data["paths"][0]["time"] / 1000 / 60 % 60)
+                hr = int(paths_data["paths"][0]["time"] / 1000 / 60 / 60)
+                print("Distance Traveled: {0:.1f} miles / {1:.1f} km".format(miles, km))
+                print("Trip Duration: {0:02d}:{1:02d}:{2:02d}".format(hr, min, sec))
+                print("=================================================")
+                for each in range(len(paths_data["paths"][0]["instructions"])):
+                    path = paths_data["paths"][0]["instructions"][each]["text"]
+                    distance = paths_data["paths"][0]["instructions"][each]["distance"]
+                    print(
+                        "{0} ( {1:.1f} km / {2:.1f} miles )".format(
+                            path, distance / 1000, distance / 1000 / 1.61
+                        )
+                    )
+                    print("=================================================")
+            else:
+                print("Error message: " + paths_data["message"])
+                print("*************************************************")
+            orig_osm_link = generate_osm_link(orig[1], orig[2])
+            dest_osm_link = generate_osm_link(dest[1], dest[2])
+
+            print("=================================================")
+            print("OpenStreetMap link for starting point:", orig_osm_link)
+            print("OpenStreetMap link for destination point:", dest_osm_link)
+            print("=================================================")
+            print("OpenStreetMap link for the entire route:", full_route_osm_link)
