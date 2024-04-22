@@ -74,7 +74,8 @@ def calculate_midpoint(coord1, coord2):
 
 
 while True:
-    print("\n+++++++++++++++++++++++++++++++++++++++++++++")
+    waypoints = input("Do you want to display waypoints? (yes/no): ")
+    print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("Vehicle profiles available on Graphhopper:")
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("car, bike, foot")
@@ -135,6 +136,11 @@ while True:
 
             # Add polyline to represent the route
             folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
+    
+        # Add markers for waypoints
+        if waypoints == "yes":
+            for point in decoded_points:
+                folium.Marker(location=[point[0], point[1]]).add_to(mymap)
 
             # Add special marker for the midpoint
             folium.Marker(location=[midpoint[0], midpoint[1]], popup="Midpoint", icon=folium.Icon(color='green')).add_to(mymap)
