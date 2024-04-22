@@ -5,9 +5,7 @@ import polyline
 import sys
 import os
 
-route_url = "https://graphhopper.com/api/1/route?"
-loc1 = "Washington, D.C."
-loc2 = "Baltimore, Maryland"
+route_url = "https://graphhopper.com/api/1/route"
 key = "1ec33ae9-33e3-4f60-8585-71b11339918d"
 
 
@@ -91,27 +89,75 @@ while True:
     if loc2 == "quit" or loc2 == "q":
         break
     dest = geocoding(loc2, key)
+    tunnel = input("Do you want to avoid tunnels (Yes/No): ")
+    if tunnel == "quit" or tunnel == "q":
+        break
     print("=================================================")
     if orig[0] == 200 and dest[0] == 200:
         op = "&point=" + str(orig[1]) + "%2C" + str(orig[2])
         dp = "&point=" + str(dest[1]) + "%2C" + str(dest[2])
+
+        if tunnel == "Yes":
+            custom_model = {
+                "speed": [
+            {
+                "if": "true",
+                "limit_to": "100"
+            }
+            ],
+            "priority": [
+            {
+                "if": "road_environment == TUNNEL",
+                "multiply_by": "0"
+            }
+            ],
+            "distance_influence": 100
+        }
+        else: 
+            custom_model = {
+                "speed": [
+            {
+                "if": "true",
+                "limit_to": "100"
+            }
+            ],
+            "priority": [],
+            "distance_influence": 100
+        }
 
         route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
         route_points = ""
         for lat, lng in route_coordinates:
             route_points += f"&point={lat}%2C{lng}"
 
-        full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}"
+        full_route_osm_link = f"https://www.openstreetmap.org/directions?engine=graphhopper_car&{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}&snap_prevention=tunnel"
 
-        paths_url = (
-            route_url
-            + urllib.parse.urlencode({"key": key, "profile": vehicle, "optimize": "true"})
-            + op
-            + dp
-        )
-        paths_status = requests.get(paths_url).status_code
-        paths_data = requests.get(paths_url).json()
+        query = {
+            "key": key
+        }
 
+        payload = {
+        "profile": vehicle,
+        "points": [
+            [
+            orig[2],
+            orig[1]
+            ],
+            [
+            dest[2],
+            dest[1]
+            ]
+        ],
+        "ch.disable": "true",
+        "custom_model": custom_model
+        }
+
+        headers = {"Content-Type": "application/json"}
+
+        paths_status = requests.post(route_url, json=payload, headers=headers, params=query).status_code
+        paths_data = requests.post(route_url, json=payload, headers=headers, params=query).json()
+
+        print(paths_data)
         # Extract polyline points
         encoded_points = paths_data["paths"][0]["points"]
 
@@ -122,8 +168,8 @@ while True:
         mymap = folium.Map(location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15)
 
         # Add markers for waypoints
-        for point in decoded_points:
-            folium.Marker(location=[point[0], point[1]]).add_to(mymap)
+        # for point in decoded_points:
+        #     folium.Marker(location=[point[0], point[1]]).add_to(mymap)
 
         # Add polyline to represent the route
         folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
@@ -143,12 +189,6 @@ while True:
         else:
             os.system(f"open route_map_with_instructions.html")
 
-        print(
-            "Routing API Status: "
-            + str(paths_status)
-            + "\nRouting API URL:\n"
-            + paths_url
-        )
         print("=================================================")
         print("Directions from " + orig[3] + " to " + dest[3] + " by " + vehicle)
         print("=================================================")
