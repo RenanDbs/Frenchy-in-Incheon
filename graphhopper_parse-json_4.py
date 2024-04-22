@@ -116,7 +116,9 @@ while True:
 
         paths_url = (
             route_url
-            + urllib.parse.urlencode({"key": key, "profile": vehicle, "optimize": "true"})
+            + urllib.parse.urlencode(
+                {"key": key, "profile": vehicle, "optimize": "true"}
+            )
             + op
             + mp
             + dp
@@ -132,31 +134,39 @@ while True:
             decoded_points = polyline.decode(encoded_points)
 
             # Create map
-            mymap = folium.Map(location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15)
+            mymap = folium.Map(
+                location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15
+            )
 
             # Add polyline to represent the route
-            folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
-    
+            folium.PolyLine(locations=decoded_points, color="blue").add_to(mymap)
+
         # Add markers for waypoints
-        if waypoints == "yes":
-            for point in decoded_points:
-                folium.Marker(location=[point[0], point[1]]).add_to(mymap)
+            if waypoints == "yes":
+                for point in decoded_points:
+                    folium.Marker(location=[point[0], point[1]]).add_to(mymap)
 
             # Add special marker for the midpoint
-            folium.Marker(location=[midpoint[0], midpoint[1]], popup="Midpoint", icon=folium.Icon(color='green')).add_to(mymap)
+            folium.Marker(
+                location=[midpoint[0], midpoint[1]],
+                popup="Midpoint",
+                icon=folium.Icon(color="green"),
+            ).add_to(mymap)
 
             # Add instructions as popups
             for instruction in paths_data["paths"][0]["instructions"]:
                 folium.Marker(
-                    location=[decoded_points[instruction["interval"][0]][0],
-                              decoded_points[instruction["interval"][0]][1]],
+                    location=[
+                        decoded_points[instruction["interval"][0]][0],
+                        decoded_points[instruction["interval"][0]][1],
+                    ],
                     popup=instruction["text"],
-                    icon=folium.Icon(color="red", icon="info-sign")
+                    icon=folium.Icon(color="red", icon="info-sign"),
                 ).add_to(mymap)
 
             # Save the map to an HTML file
             mymap.save("route_map_with_instructions.html")
-            if sys.platform.startswith('win'):
+            if sys.platform.startswith("win"):
                 os.system(f"start route_map_with_instructions.html")
             else:
                 os.system(f"open route_map_with_instructions.html")
@@ -199,6 +209,3 @@ while True:
             print("OpenStreetMap link for destination point:", dest_osm_link)
             print("=================================================")
             print("OpenStreetMap link for the entire route:", full_route_osm_link)
-        else:
-            print("Error message: " + paths_data["message"])
-            print("*************************************************")
