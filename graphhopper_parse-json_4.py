@@ -91,6 +91,12 @@ while True:
     if orig[0] == 200 and dest[0] == 200:
         op = "&point=" + str(orig[1]) + "%2C" + str(orig[2])
         dp = "&point=" + str(dest[1]) + "%2C" + str(dest[2])
+
+        route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
+        route_points = "&".join([f"point={lat},{lng}" for lat, lng in route_coordinates])
+        full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}"
+
+
         paths_url = (
             route_url
             + urllib.parse.urlencode({"key": key, "vehicle": vehicle})
@@ -135,3 +141,6 @@ while True:
         print("=================================================")
         print("OpenStreetMap link for starting point:", orig_osm_link)
         print("OpenStreetMap link for destination point:", dest_osm_link)
+        print("=================================================")
+        print("OpenStreetMap link for the entire route:", full_route_osm_link)
+
