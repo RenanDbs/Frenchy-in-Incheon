@@ -93,9 +93,11 @@ while True:
         dp = "&point=" + str(dest[1]) + "%2C" + str(dest[2])
 
         route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
-        route_points = "&".join([f"point={lat},{lng}" for lat, lng in route_coordinates])
-        full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}"
+        route_points = ""
+        for lat, lng in route_coordinates:
+            route_points += f"&point={lat}%2C{lng}"
 
+        full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}"
 
         paths_url = (
             route_url
@@ -137,10 +139,9 @@ while True:
             print("*************************************************")
         orig_osm_link = generate_osm_link(orig[1], orig[2])
         dest_osm_link = generate_osm_link(dest[1], dest[2])
-        
+
         print("=================================================")
         print("OpenStreetMap link for starting point:", orig_osm_link)
         print("OpenStreetMap link for destination point:", dest_osm_link)
         print("=================================================")
         print("OpenStreetMap link for the entire route:", full_route_osm_link)
-
