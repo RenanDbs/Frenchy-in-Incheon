@@ -106,7 +106,7 @@ while True:
 
         route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
         midpoint = calculate_midpoint((orig[1], orig[2]), (dest[1], dest[2]))
-        mp = f"&point={midpoint[0]},{midpoint[1]}"  # Midpoint (checkpoint)
+        mp = f"&point={midpoint[0]},{midpoint[1]}"
 
         if tunnel == "Yes":
             custom_model = {
@@ -155,6 +155,10 @@ while True:
             orig[1]
             ],
             [
+            midpoint[1],
+            midpoint[0]
+            ],
+            [
             dest[2],
             dest[1]
             ]
@@ -168,23 +172,10 @@ while True:
         paths_status = requests.post(route_url, json=payload, headers=headers, params=query).status_code
         paths_data = requests.post(route_url, json=payload, headers=headers, params=query).json()
 
-        print(paths_data)
         # Extract polyline points
         encoded_points = paths_data["paths"][0]["points"]
 
         full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}"
-
-        paths_url = (
-            route_url
-            + urllib.parse.urlencode(
-                {"key": key, "profile": vehicle, "optimize": "true"}
-            )
-            + op
-            + mp
-            + dp
-        )
-        paths_status = requests.get(paths_url).status_code
-        paths_data = requests.get(paths_url).json()
 
         if "paths" in paths_data:
             # Extract polyline points
@@ -201,7 +192,7 @@ while True:
 
             folium.PolyLine(locations=decoded_points, color="blue").add_to(mymap)
 
-        # Add markers for waypoints
+            # Add markers for waypoints
             if waypoints == "yes":
                 for point in decoded_points:
                     folium.Marker(location=[point[0], point[1]]).add_to(mymap)
