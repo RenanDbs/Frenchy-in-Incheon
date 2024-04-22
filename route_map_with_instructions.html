@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f8c2d0671121d916508686492731ec61 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f8c2d0671121d916508686492731ec61" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f8c2d0671121d916508686492731ec61 = L.map(
+                "map_f8c2d0671121d916508686492731ec61",
+                {
+                    center: [48.92457, 2.36255],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a594b78a433cbbfb8b21871cbe2734df = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_a594b78a433cbbfb8b21871cbe2734df.addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var poly_line_5979e12ff63ccfe0870af078cafaa121 = L.polyline(
+                [[48.92457, 2.36255], [48.92618, 2.3624], [48.92611, 2.36056], [48.92602, 2.35813], [48.9259, 2.35717], [48.9262, 2.35714], [48.92619, 2.35659], [48.9242, 2.35672], [48.92408, 2.35676], [48.92343, 2.35686], [48.9229, 2.35692], [48.92264, 2.35705], [48.92168, 2.35711], [48.91952, 2.3573], [48.91092, 2.35792], [48.90613, 2.35836], [48.90324, 2.35857], [48.90272, 2.35859], [48.90258, 2.35855], [48.90226, 2.35857], [48.90199, 2.35857], [48.90169, 2.35846], [48.90152, 2.35832], [48.90131, 2.35807], [48.90123, 2.35789], [48.90112, 2.35755], [48.90109, 2.35733], [48.90108, 2.35712], [48.90115, 2.35559], [48.90109, 2.35505], [48.90117, 2.35406], [48.9012, 2.3533], [48.9012, 2.35195], [48.90105, 2.34449], [48.90094, 2.3405], [48.90084, 2.33422], [48.90066, 2.32562], [48.90064, 2.32359], [48.9006, 2.32288], [48.90052, 2.32225], [48.90045, 2.32183], [48.9003, 2.32116], [48.89853, 2.31523], [48.89819, 2.31417], [48.89567, 2.30749], [48.89531, 2.30664], [48.895, 2.30609], [48.8942, 2.30484], [48.89355, 2.30376], [48.89339, 2.30331], [48.89312, 2.30267], [48.89256, 2.30158], [48.89248, 2.30136], [48.89225, 2.30094], [48.89215, 2.30104], [48.89186, 2.30142], [48.89182, 2.30148], [48.89175, 2.30165], [48.89086, 2.3028], [48.89025, 2.30366], [48.89006, 2.30371], [48.88991, 2.30387], [48.88957, 2.30399], [48.88769, 2.30456], [48.88754, 2.30455], [48.88749, 2.30448], [48.88743, 2.30444], [48.88737, 2.30443], [48.88731, 2.30445], [48.88725, 2.3045], [48.88721, 2.30457], [48.88719, 2.30466], [48.88705, 2.30481], [48.88702, 2.30502], [48.8819, 2.31128], [48.88085, 2.31254], [48.87901, 2.31481], [48.87839, 2.31554], [48.87779, 2.31631], [48.87507, 2.3196], [48.87465, 2.32003], [48.87447, 2.32016], [48.87253, 2.32151], [48.87071, 2.32283], [48.86997, 2.32335], [48.86987, 2.32332], [48.86951, 2.32358], [48.86936, 2.3237], [48.86926, 2.32389], [48.86662, 2.32196], [48.86643, 2.32179], [48.8664, 2.32174], [48.86631, 2.32142], [48.86622, 2.32113], [48.86612, 2.32095], [48.86598, 2.3208], [48.86508, 2.32017], [48.86494, 2.32017], [48.86462, 2.3203], [48.86423, 2.32005], [48.86412, 2.32006], [48.86407, 2.32011], [48.86253, 2.31898], [48.86239, 2.31937], [48.86217, 2.31967], [48.86187, 2.3195], [48.86074, 2.3188], [48.8608, 2.318], [48.86043, 2.31807], [48.86039, 2.31812], [48.86037, 2.31828], [48.8598, 2.31816], [48.85957, 2.31901], [48.85914, 2.32021], [48.85889, 2.32003]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var marker_111cd8e82f5fcfe28deeba7084f42f17 = L.marker(
+                [48.92457, 2.36255],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_2e5b49974c5c42bd015ef404080c16d0 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_111cd8e82f5fcfe28deeba7084f42f17.setIcon(icon_2e5b49974c5c42bd015ef404080c16d0);
+        
+    
+        var popup_63a2ab031557328485fc71ad2c781107 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c8593a841dcb360b00c7f416c8d8590b = $(`<div id="html_c8593a841dcb360b00c7f416c8d8590b" style="width: 100.0%; height: 100.0%;">Continue onto Avenue Jules Rimet</div>`)[0];
+                popup_63a2ab031557328485fc71ad2c781107.setContent(html_c8593a841dcb360b00c7f416c8d8590b);
+            
+        
+
+        marker_111cd8e82f5fcfe28deeba7084f42f17.bindPopup(popup_63a2ab031557328485fc71ad2c781107)
+        ;
+
+        
+    
+    
+            var marker_d96ae37272c1646bbb3194dd07d4bd18 = L.marker(
+                [48.92618, 2.3624],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_c20816bec93cfbf5139483c21180ff3c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_d96ae37272c1646bbb3194dd07d4bd18.setIcon(icon_c20816bec93cfbf5139483c21180ff3c);
+        
+    
+        var popup_c08e099182086e45633788072d654945 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_13f43a9424476f2da5d1af7e28961dab = $(`<div id="html_13f43a9424476f2da5d1af7e28961dab" style="width: 100.0%; height: 100.0%;">Turn left onto Rue Henri Delaunay</div>`)[0];
+                popup_c08e099182086e45633788072d654945.setContent(html_13f43a9424476f2da5d1af7e28961dab);
+            
+        
+
+        marker_d96ae37272c1646bbb3194dd07d4bd18.bindPopup(popup_c08e099182086e45633788072d654945)
+        ;
+
+        
+    
+    
+            var marker_f5c4b6378111733f3804c04ff8fa81c2 = L.marker(
+                [48.9259, 2.35717],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_d217daf2f22b38f349d72d32fb9f52a4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f5c4b6378111733f3804c04ff8fa81c2.setIcon(icon_d217daf2f22b38f349d72d32fb9f52a4);
+        
+    
+        var popup_3738d1b9e158ae5411b6c51c5dd7020b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f8d3773b290f0d008c2772fb70b99799 = $(`<div id="html_f8d3773b290f0d008c2772fb70b99799" style="width: 100.0%; height: 100.0%;">Turn right onto Avenue du Président Wilson</div>`)[0];
+                popup_3738d1b9e158ae5411b6c51c5dd7020b.setContent(html_f8d3773b290f0d008c2772fb70b99799);
+            
+        
+
+        marker_f5c4b6378111733f3804c04ff8fa81c2.bindPopup(popup_3738d1b9e158ae5411b6c51c5dd7020b)
+        ;
+
+        
+    
+    
+            var marker_f71ef1e3b12b96734f79655c22a42f65 = L.marker(
+                [48.9262, 2.35714],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_907784ba62883d7f96688b9c36a8c7ba = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f71ef1e3b12b96734f79655c22a42f65.setIcon(icon_907784ba62883d7f96688b9c36a8c7ba);
+        
+    
+        var popup_653cc47d6e7a4da3034f9584468033d9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_626bc5b131379f7c3effb85df0b80e73 = $(`<div id="html_626bc5b131379f7c3effb85df0b80e73" style="width: 100.0%; height: 100.0%;">Turn left onto D 912</div>`)[0];
+                popup_653cc47d6e7a4da3034f9584468033d9.setContent(html_626bc5b131379f7c3effb85df0b80e73);
+            
+        
+
+        marker_f71ef1e3b12b96734f79655c22a42f65.bindPopup(popup_653cc47d6e7a4da3034f9584468033d9)
+        ;
+
+        
+    
+    
+            var marker_8de650422c14487eb92258929087923e = L.marker(
+                [48.92619, 2.35659],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_d7683eb33e317ed21919f2e1254fa64e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_8de650422c14487eb92258929087923e.setIcon(icon_d7683eb33e317ed21919f2e1254fa64e);
+        
+    
+        var popup_3fdcc8f8895e6d52c5ef52081f4f9b5a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bfdc436df13fd900667c389acd9bea37 = $(`<div id="html_bfdc436df13fd900667c389acd9bea37" style="width: 100.0%; height: 100.0%;">Turn left onto Avenue du Président Wilson</div>`)[0];
+                popup_3fdcc8f8895e6d52c5ef52081f4f9b5a.setContent(html_bfdc436df13fd900667c389acd9bea37);
+            
+        
+
+        marker_8de650422c14487eb92258929087923e.bindPopup(popup_3fdcc8f8895e6d52c5ef52081f4f9b5a)
+        ;
+
+        
+    
+    
+            var marker_aa87d0459a5336924f4953b6ceaba3cd = L.marker(
+                [48.9242, 2.35672],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_ab229b9e144a1d6af038d1be80b401fb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_aa87d0459a5336924f4953b6ceaba3cd.setIcon(icon_ab229b9e144a1d6af038d1be80b401fb);
+        
+    
+        var popup_ff9423dfaf6f6c0294e16237794d9842 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_0fb90e305b837def9633440037bd39c2 = $(`<div id="html_0fb90e305b837def9633440037bd39c2" style="width: 100.0%; height: 100.0%;">Keep left and drive toward Paris</div>`)[0];
+                popup_ff9423dfaf6f6c0294e16237794d9842.setContent(html_0fb90e305b837def9633440037bd39c2);
+            
+        
+
+        marker_aa87d0459a5336924f4953b6ceaba3cd.bindPopup(popup_ff9423dfaf6f6c0294e16237794d9842)
+        ;
+
+        
+    
+    
+            var marker_4b5675e4a2e09ba68ffd93c06c407fb2 = L.marker(
+                [48.90272, 2.35859],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_65c92498f43e07c09d574ea92aeedc85 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_4b5675e4a2e09ba68ffd93c06c407fb2.setIcon(icon_65c92498f43e07c09d574ea92aeedc85);
+        
+    
+        var popup_0f2a574cc47de1d58f992c3860970937 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_810a7e9683acd4cee2c43464ddbcbc8f = $(`<div id="html_810a7e9683acd4cee2c43464ddbcbc8f" style="width: 100.0%; height: 100.0%;">Keep right and drive toward Rouen, Pte de Clignancourt, Périphérique ouest</div>`)[0];
+                popup_0f2a574cc47de1d58f992c3860970937.setContent(html_810a7e9683acd4cee2c43464ddbcbc8f);
+            
+        
+
+        marker_4b5675e4a2e09ba68ffd93c06c407fb2.bindPopup(popup_0f2a574cc47de1d58f992c3860970937)
+        ;
+
+        
+    
+    
+            var marker_d22a230d72543848ad21356f607e32bb = L.marker(
+                [48.89355, 2.30376],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_f93a25f9b3f3be66d8ce6d2e2f2b5fb1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_d22a230d72543848ad21356f607e32bb.setIcon(icon_f93a25f9b3f3be66d8ce6d2e2f2b5fb1);
+        
+    
+        var popup_ecddb671ee97df32f08d7f6b52845417 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_20fde56d6755ad95c3b4d3a516141c74 = $(`<div id="html_20fde56d6755ad95c3b4d3a516141c74" style="width: 100.0%; height: 100.0%;">Keep right and take D 909 toward Porte d'Asnières</div>`)[0];
+                popup_ecddb671ee97df32f08d7f6b52845417.setContent(html_20fde56d6755ad95c3b4d3a516141c74);
+            
+        
+
+        marker_d22a230d72543848ad21356f607e32bb.bindPopup(popup_ecddb671ee97df32f08d7f6b52845417)
+        ;
+
+        
+    
+    
+            var marker_0133f613fd485a2e3a25771a91588629 = L.marker(
+                [48.89225, 2.30094],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_921dc54b2d3fb6cc41a7d3fbbed3d03d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_0133f613fd485a2e3a25771a91588629.setIcon(icon_921dc54b2d3fb6cc41a7d3fbbed3d03d);
+        
+    
+        var popup_f6f8ec81d9cd9016b62c4630fa5cda08 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ead4f61dc25e2208aa3c0e34f38407d0 = $(`<div id="html_ead4f61dc25e2208aa3c0e34f38407d0" style="width: 100.0%; height: 100.0%;">Turn left onto Avenue de la Porte d'Asnières</div>`)[0];
+                popup_f6f8ec81d9cd9016b62c4630fa5cda08.setContent(html_ead4f61dc25e2208aa3c0e34f38407d0);
+            
+        
+
+        marker_0133f613fd485a2e3a25771a91588629.bindPopup(popup_f6f8ec81d9cd9016b62c4630fa5cda08)
+        ;
+
+        
+    
+    
+            var marker_a0496267d6e5c42302112614e000d91e = L.marker(
+                [48.88754, 2.30455],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_ca9704487e2e23b4bc23e06777fa1e2a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_a0496267d6e5c42302112614e000d91e.setIcon(icon_ca9704487e2e23b4bc23e06777fa1e2a);
+        
+    
+        var popup_1c73c1b19d44236019736ac3d8891926 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f7bfb536bcd6933af87dff1a0b2248a5 = $(`<div id="html_f7bfb536bcd6933af87dff1a0b2248a5" style="width: 100.0%; height: 100.0%;">At roundabout, take exit 2 onto Boulevard Malesherbes</div>`)[0];
+                popup_1c73c1b19d44236019736ac3d8891926.setContent(html_f7bfb536bcd6933af87dff1a0b2248a5);
+            
+        
+
+        marker_a0496267d6e5c42302112614e000d91e.bindPopup(popup_1c73c1b19d44236019736ac3d8891926)
+        ;
+
+        
+    
+    
+            var marker_139f9dd2646e3d4a474f7329d0ef7116 = L.marker(
+                [48.86926, 2.32389],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_6d8a9f486cb565b9794c0b69c0ddf575 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_139f9dd2646e3d4a474f7329d0ef7116.setIcon(icon_6d8a9f486cb565b9794c0b69c0ddf575);
+        
+    
+        var popup_5ca92d4886d673c7b4e5a444a4bde75a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7c194d57e4fe954e437e585f7c79c163 = $(`<div id="html_7c194d57e4fe954e437e585f7c79c163" style="width: 100.0%; height: 100.0%;">Turn right onto Rue Royale</div>`)[0];
+                popup_5ca92d4886d673c7b4e5a444a4bde75a.setContent(html_7c194d57e4fe954e437e585f7c79c163);
+            
+        
+
+        marker_139f9dd2646e3d4a474f7329d0ef7116.bindPopup(popup_5ca92d4886d673c7b4e5a444a4bde75a)
+        ;
+
+        
+    
+    
+            var marker_2a5ea821616109197c4e4646175f64eb = L.marker(
+                [48.86631, 2.32142],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_747af1a2dedce0cac9256257a6a556d2 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_2a5ea821616109197c4e4646175f64eb.setIcon(icon_747af1a2dedce0cac9256257a6a556d2);
+        
+    
+        var popup_e6dec7621bbf766078cece57363e97e0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3b6c853d5a20f8835019335ae41924f5 = $(`<div id="html_3b6c853d5a20f8835019335ae41924f5" style="width: 100.0%; height: 100.0%;">At roundabout, take exit 2 onto Place de la Concorde</div>`)[0];
+                popup_e6dec7621bbf766078cece57363e97e0.setContent(html_3b6c853d5a20f8835019335ae41924f5);
+            
+        
+
+        marker_2a5ea821616109197c4e4646175f64eb.bindPopup(popup_e6dec7621bbf766078cece57363e97e0)
+        ;
+
+        
+    
+    
+            var marker_ae49426033974c6a92bbfafb21c56a8f = L.marker(
+                [48.86407, 2.32011],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_d987ca2dcc05f367e66b5700414d38c7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_ae49426033974c6a92bbfafb21c56a8f.setIcon(icon_d987ca2dcc05f367e66b5700414d38c7);
+        
+    
+        var popup_074a908acf8e453754d0d4a8b65e5f6f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5e6dbe789a4e592aba235b9954028754 = $(`<div id="html_5e6dbe789a4e592aba235b9954028754" style="width: 100.0%; height: 100.0%;">Turn right onto Pont de la Concorde</div>`)[0];
+                popup_074a908acf8e453754d0d4a8b65e5f6f.setContent(html_5e6dbe789a4e592aba235b9954028754);
+            
+        
+
+        marker_ae49426033974c6a92bbfafb21c56a8f.bindPopup(popup_074a908acf8e453754d0d4a8b65e5f6f)
+        ;
+
+        
+    
+    
+            var marker_dc048a85c6302e6ff80461863cb34c3b = L.marker(
+                [48.86253, 2.31898],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_2338af4f95d3e31ce103c3f09a4154ac = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_dc048a85c6302e6ff80461863cb34c3b.setIcon(icon_2338af4f95d3e31ce103c3f09a4154ac);
+        
+    
+        var popup_e82e982da4cb0cd7f1c1814fb205103a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d65600dd4919cb42acfc98f0c1032e8e = $(`<div id="html_d65600dd4919cb42acfc98f0c1032e8e" style="width: 100.0%; height: 100.0%;">Turn left onto Boulevard Saint-Germain</div>`)[0];
+                popup_e82e982da4cb0cd7f1c1814fb205103a.setContent(html_d65600dd4919cb42acfc98f0c1032e8e);
+            
+        
+
+        marker_dc048a85c6302e6ff80461863cb34c3b.bindPopup(popup_e82e982da4cb0cd7f1c1814fb205103a)
+        ;
+
+        
+    
+    
+            var marker_2132468ee8ed05fef37d040ccf5037bc = L.marker(
+                [48.86217, 2.31967],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_939247e4baec8801eff15edbbc70c944 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_2132468ee8ed05fef37d040ccf5037bc.setIcon(icon_939247e4baec8801eff15edbbc70c944);
+        
+    
+        var popup_bd895923ceab6a1bde10f6b0a778a1d7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ef4afa8209d15e18591b65367941b55e = $(`<div id="html_ef4afa8209d15e18591b65367941b55e" style="width: 100.0%; height: 100.0%;">Turn right onto Rue Aristide Briand</div>`)[0];
+                popup_bd895923ceab6a1bde10f6b0a778a1d7.setContent(html_ef4afa8209d15e18591b65367941b55e);
+            
+        
+
+        marker_2132468ee8ed05fef37d040ccf5037bc.bindPopup(popup_bd895923ceab6a1bde10f6b0a778a1d7)
+        ;
+
+        
+    
+    
+            var marker_c0723a49dc07593d3aa6fff2fc1c137b = L.marker(
+                [48.86187, 2.3195],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_d9d15f8e9dcd3634f77a1005259e647b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_c0723a49dc07593d3aa6fff2fc1c137b.setIcon(icon_d9d15f8e9dcd3634f77a1005259e647b);
+        
+    
+        var popup_84b25e95a036a6aa4668f84a7ad472e0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8cdd68711e611bb712dff81d0d1256ab = $(`<div id="html_8cdd68711e611bb712dff81d0d1256ab" style="width: 100.0%; height: 100.0%;">Continue onto Rue Aristide Briand</div>`)[0];
+                popup_84b25e95a036a6aa4668f84a7ad472e0.setContent(html_8cdd68711e611bb712dff81d0d1256ab);
+            
+        
+
+        marker_c0723a49dc07593d3aa6fff2fc1c137b.bindPopup(popup_84b25e95a036a6aa4668f84a7ad472e0)
+        ;
+
+        
+    
+    
+            var marker_f23127df45cfed197bfa4d6ebe56fb7c = L.marker(
+                [48.86074, 2.3188],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_edb16607e5cdcee0efa7255de548b19b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f23127df45cfed197bfa4d6ebe56fb7c.setIcon(icon_edb16607e5cdcee0efa7255de548b19b);
+        
+    
+        var popup_5ca092761b4cf644d870ecef3e28a756 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_dd02bd82554ee155a17aea88e4524b59 = $(`<div id="html_dd02bd82554ee155a17aea88e4524b59" style="width: 100.0%; height: 100.0%;">Turn right onto Rue de l'Université</div>`)[0];
+                popup_5ca092761b4cf644d870ecef3e28a756.setContent(html_dd02bd82554ee155a17aea88e4524b59);
+            
+        
+
+        marker_f23127df45cfed197bfa4d6ebe56fb7c.bindPopup(popup_5ca092761b4cf644d870ecef3e28a756)
+        ;
+
+        
+    
+    
+            var marker_45effca0ac45867eacf4b35cee3f0e13 = L.marker(
+                [48.8608, 2.318],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_b4cb5323bd5d443a2c66f858837cdf79 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_45effca0ac45867eacf4b35cee3f0e13.setIcon(icon_b4cb5323bd5d443a2c66f858837cdf79);
+        
+    
+        var popup_f39edbefbc67384794edd18ab44f3500 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_235249370f5f49e77592a150d9f20e8f = $(`<div id="html_235249370f5f49e77592a150d9f20e8f" style="width: 100.0%; height: 100.0%;">Turn left onto Place du Palais Bourbon</div>`)[0];
+                popup_f39edbefbc67384794edd18ab44f3500.setContent(html_235249370f5f49e77592a150d9f20e8f);
+            
+        
+
+        marker_45effca0ac45867eacf4b35cee3f0e13.bindPopup(popup_f39edbefbc67384794edd18ab44f3500)
+        ;
+
+        
+    
+    
+            var marker_acf08c64f583cf7151a6c9136a757dd7 = L.marker(
+                [48.86037, 2.31828],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_7bcc3e36384e77b37096b8d5bb9ca4c4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_acf08c64f583cf7151a6c9136a757dd7.setIcon(icon_7bcc3e36384e77b37096b8d5bb9ca4c4);
+        
+    
+        var popup_f806ec6424afbf0c2227b386591deabc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b3888afedbfb3e2a73d22dd00ea0c9f0 = $(`<div id="html_b3888afedbfb3e2a73d22dd00ea0c9f0" style="width: 100.0%; height: 100.0%;">Turn right onto Rue de Bourgogne</div>`)[0];
+                popup_f806ec6424afbf0c2227b386591deabc.setContent(html_b3888afedbfb3e2a73d22dd00ea0c9f0);
+            
+        
+
+        marker_acf08c64f583cf7151a6c9136a757dd7.bindPopup(popup_f806ec6424afbf0c2227b386591deabc)
+        ;
+
+        
+    
+    
+            var marker_579ea23805ecb3ec67d48e3859bac536 = L.marker(
+                [48.8598, 2.31816],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_671f5345c94f4f973f28877a26c1cd78 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_579ea23805ecb3ec67d48e3859bac536.setIcon(icon_671f5345c94f4f973f28877a26c1cd78);
+        
+    
+        var popup_69efc728fafe63c5896d84698cdcaaed = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c165969b47df4095e0a8b82877e3701b = $(`<div id="html_c165969b47df4095e0a8b82877e3701b" style="width: 100.0%; height: 100.0%;">Turn left onto Rue Saint-Dominique</div>`)[0];
+                popup_69efc728fafe63c5896d84698cdcaaed.setContent(html_c165969b47df4095e0a8b82877e3701b);
+            
+        
+
+        marker_579ea23805ecb3ec67d48e3859bac536.bindPopup(popup_69efc728fafe63c5896d84698cdcaaed)
+        ;
+
+        
+    
+    
+            var marker_02409098027dcfc0c2d27ad5c4ae254f = L.marker(
+                [48.85914, 2.32021],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_e0bc56508d7230108e0fb2ff67391b3c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_02409098027dcfc0c2d27ad5c4ae254f.setIcon(icon_e0bc56508d7230108e0fb2ff67391b3c);
+        
+    
+        var popup_41143cc82733ff13463fd366fed7bc53 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6681d7d6ef1275c0e389d1afb254b3c9 = $(`<div id="html_6681d7d6ef1275c0e389d1afb254b3c9" style="width: 100.0%; height: 100.0%;">Turn right onto Rue Casimir Périer</div>`)[0];
+                popup_41143cc82733ff13463fd366fed7bc53.setContent(html_6681d7d6ef1275c0e389d1afb254b3c9);
+            
+        
+
+        marker_02409098027dcfc0c2d27ad5c4ae254f.bindPopup(popup_41143cc82733ff13463fd366fed7bc53)
+        ;
+
+        
+    
+    
+            var marker_003c29a51213eaf8d1b23c4c9fddc55a = L.marker(
+                [48.85889, 2.32003],
+                {}
+            ).addTo(map_f8c2d0671121d916508686492731ec61);
+        
+    
+            var icon_830402c8582ad22cfe0dc83d548ff01d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_003c29a51213eaf8d1b23c4c9fddc55a.setIcon(icon_830402c8582ad22cfe0dc83d548ff01d);
+        
+    
+        var popup_3715565f6390ee7fe3d7439407120983 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a791e9320123d4eb7bf4b175320b551a = $(`<div id="html_a791e9320123d4eb7bf4b175320b551a" style="width: 100.0%; height: 100.0%;">Arrive at destination</div>`)[0];
+                popup_3715565f6390ee7fe3d7439407120983.setContent(html_a791e9320123d4eb7bf4b175320b551a);
+            
+        
+
+        marker_003c29a51213eaf8d1b23c4c9fddc55a.bindPopup(popup_3715565f6390ee7fe3d7439407120983)
+        ;
+
+        
+    
+</script>
+</html>

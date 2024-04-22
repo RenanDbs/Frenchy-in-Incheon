@@ -68,7 +68,8 @@ def geocoding(location, key):
 
 
 while True:
-    print("\n+++++++++++++++++++++++++++++++++++++++++++++")
+    waypoints = input("Do you want to display waypoints? (yes/no): ")
+    print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("Vehicle profiles available on Graphhopper:")
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("car, bike, foot")
@@ -122,8 +123,9 @@ while True:
         mymap = folium.Map(location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15)
 
         # Add markers for waypoints
-        for point in decoded_points:
-            folium.Marker(location=[point[0], point[1]]).add_to(mymap)
+        if waypoints == "yes":
+            for point in decoded_points:
+                folium.Marker(location=[point[0], point[1]]).add_to(mymap)
 
         # Add polyline to represent the route
         folium.PolyLine(locations=decoded_points, color='blue').add_to(mymap)
