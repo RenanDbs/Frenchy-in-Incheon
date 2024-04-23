@@ -9,10 +9,14 @@ route_url = "https://graphhopper.com/api/1/route"
 key = "1ec33ae9-33e3-4f60-8585-71b11339918d"
 
 
+# Function to generate an OpenStreetMap link
+# The function takes the latitude and longitude as input and returns a link to OpenStreetMap
 def generate_osm_link(lat, lng):
     return f"https://www.openstreetmap.org/?mlat={lat}&mlon={lng}&zoom=12"
 
 
+# Geocoding function to get the latitude and longitude of a location
+# The function returns the status code, latitude, longitude, and the name of the location
 def geocoding(location, key):
     while location == "":
         location = input("Enter the location again: ")
@@ -64,7 +68,7 @@ def geocoding(location, key):
             )
     return json_status, lat, lng, new_loc
 
-
+# Calculate the midpoint between two coordinates
 def calculate_midpoint(coord1, coord2):
     mid_lat = (coord1[0] + coord2[0]) / 2
     mid_lng = (coord1[1] + coord2[1]) / 2
@@ -72,6 +76,7 @@ def calculate_midpoint(coord1, coord2):
 
 
 while True:
+    # Ask the user for the vehicle profile, starting location, destination, and whether to avoid tunnels
     waypoints = input("Do you want to display waypoints? (yes/no): ")
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     print("Vehicle profiles available on Graphhopper:")
@@ -80,6 +85,8 @@ while True:
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     profile = ["car", "bike", "foot"]
     vehicle = input("Enter a vehicle profile from the list above: ")
+    
+    # Check if the user wants to quit
     if vehicle == "quit" or vehicle == "q":
         break
     elif vehicle in profile:
@@ -87,6 +94,7 @@ while True:
     else:
         vehicle = "car"
         print("No valid vehicle profile was entered. Using the car profile.")
+    # Get the starting location, destination, and whether to avoid tunnels
     loc1 = input("Starting Location: ")
     if loc1 == "quit" or loc1 == "q":
         break
@@ -97,8 +105,11 @@ while True:
         break
     dest = geocoding(loc2, key)
     tunnel = input("Do you want to avoid tunnels (Yes/No): ")
+
+    # Check if the user wants to quit
     if tunnel == "quit" or tunnel == "q":
         break
+
     print("=================================================")
     if orig[0] == 200 and dest[0] == 200:
         op = f"&point={orig[1]},{orig[2]}"  # Origin point
@@ -136,13 +147,16 @@ while True:
             "distance_influence": 100
         }
 
+        # Create a link to the route on OpenStreetMap
         route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
         route_points = ""
         for lat, lng in route_coordinates:
             route_points += f"&point={lat}%2C{lng}"
 
+        # Create a link to the route on OpenStreetMap
         full_route_osm_link = f"https://www.openstreetmap.org/directions?engine=graphhopper_car&{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}&snap_prevention=tunnel"
 
+        # Set the query parameters
         query = {
             "key": key
         }
@@ -167,14 +181,17 @@ while True:
         "custom_model": custom_model
         }
 
+        # Set the Content-Type header to "application/json"
         headers = {"Content-Type": "application/json"}
 
+        # Send a POST request to the GraphHopper API
         paths_status = requests.post(route_url, json=payload, headers=headers, params=query).status_code
         paths_data = requests.post(route_url, json=payload, headers=headers, params=query).json()
 
         # Extract polyline points
         encoded_points = paths_data["paths"][0]["points"]
 
+        # Decode polyline points
         full_route_osm_link = f"https://www.openstreetmap.org/directions?{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}"
 
         if "paths" in paths_data:
@@ -190,6 +207,7 @@ while True:
                 location=[decoded_points[0][0], decoded_points[0][1]], zoom_start=15
             )
 
+            # Add polyline to map
             folium.PolyLine(locations=decoded_points, color="blue").add_to(mymap)
 
             # Add markers for waypoints
@@ -222,19 +240,7 @@ while True:
             else:
                 os.system(f"open route_map_with_instructions.html")
 
-
-        print("=================================================")
-        print("Directions from " + orig[3] + " to " + dest[3] + " by " + vehicle)
-        print("=================================================")
-        if paths_status == 200:
-            miles = (paths_data["paths"][0]["distance"]) / 1000 / 1.61
-            km = (paths_data["paths"][0]["distance"]) / 1000
-            sec = int(paths_data["paths"][0]["time"] / 1000 % 60)
-            min = int(paths_data["paths"][0]["time"] / 1000 / 60 % 60)
-            hr = int(paths_data["paths"][0]["time"] / 1000 / 60 / 60)
-            print("Distance Traveled: {0:.1f} miles / {1:.1f} km".format(miles, km))
-            print("Trip Duration: {0:02d}:{1:02d}:{2:02d}".format(hr, min, sec))
-
+            # Print route details
             print("=================================================")
             print("Directions from " + orig[3] + " to " + dest[3] + " by " + vehicle)
             print("=================================================")
@@ -259,9 +265,12 @@ while True:
             else:
                 print("Error message: " + paths_data["message"])
                 print("*************************************************")
+
+            # Print OpenStreetMap links
             orig_osm_link = generate_osm_link(orig[1], orig[2])
             dest_osm_link = generate_osm_link(dest[1], dest[2])
 
+            # Print OpenStreetMap links
             print("=================================================")
             print("OpenStreetMap link for starting point:", orig_osm_link)
             print("OpenStreetMap link for destination point:", dest_osm_link)
