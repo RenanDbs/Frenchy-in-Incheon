@@ -68,6 +68,7 @@ def geocoding(location, key):
             )
     return json_status, lat, lng, new_loc
 
+
 # Calculate the midpoint between two coordinates
 def calculate_midpoint(coord1, coord2):
     mid_lat = (coord1[0] + coord2[0]) / 2
@@ -85,7 +86,7 @@ while True:
     print("+++++++++++++++++++++++++++++++++++++++++++++")
     profile = ["car", "bike", "foot"]
     vehicle = input("Enter a vehicle profile from the list above: ")
-    
+
     # Check if the user wants to quit
     if vehicle == "quit" or vehicle == "q":
         break
@@ -121,31 +122,16 @@ while True:
 
         if tunnel == "Yes":
             custom_model = {
-                "speed": [
-            {
-                "if": "true",
-                "limit_to": "100"
+                "speed": [{"if": "true", "limit_to": "100"}],
+                "priority": [{"if": "road_environment == TUNNEL", "multiply_by": "0"}],
+                "distance_influence": 100,
             }
-            ],
-            "priority": [
-            {
-                "if": "road_environment == TUNNEL",
-                "multiply_by": "0"
-            }
-            ],
-            "distance_influence": 100
-        }
-        else: 
+        else:
             custom_model = {
-                "speed": [
-            {
-                "if": "true",
-                "limit_to": "100"
+                "speed": [{"if": "true", "limit_to": "100"}],
+                "priority": [],
+                "distance_influence": 100,
             }
-            ],
-            "priority": [],
-            "distance_influence": 100
-        }
 
         # Create a link to the route on OpenStreetMap
         route_coordinates = [(orig[1], orig[2]), (dest[1], dest[2])]
@@ -157,36 +143,29 @@ while True:
         full_route_osm_link = f"https://www.openstreetmap.org/directions?engine=graphhopper_car&{route_points}&route={orig[1]}%2C{orig[2]}%3B{dest[1]}%2C{dest[2]}&snap_prevention=tunnel"
 
         # Set the query parameters
-        query = {
-            "key": key
-        }
+        query = {"key": key}
 
         payload = {
-        "profile": vehicle,
-        "points": [
-            [
-            orig[2],
-            orig[1]
+            "profile": vehicle,
+            "points": [
+                [orig[2], orig[1]],
+                [midpoint[1], midpoint[0]],
+                [dest[2], dest[1]],
             ],
-            [
-            midpoint[1],
-            midpoint[0]
-            ],
-            [
-            dest[2],
-            dest[1]
-            ]
-        ],
-        "ch.disable": "true",
-        "custom_model": custom_model
+            "ch.disable": "true",
+            "custom_model": custom_model,
         }
 
         # Set the Content-Type header to "application/json"
         headers = {"Content-Type": "application/json"}
 
         # Send a POST request to the GraphHopper API
-        paths_status = requests.post(route_url, json=payload, headers=headers, params=query).status_code
-        paths_data = requests.post(route_url, json=payload, headers=headers, params=query).json()
+        paths_status = requests.post(
+            route_url, json=payload, headers=headers, params=query
+        ).status_code
+        paths_data = requests.post(
+            route_url, json=payload, headers=headers, params=query
+        ).json()
 
         # Extract polyline points
         encoded_points = paths_data["paths"][0]["points"]
@@ -197,7 +176,6 @@ while True:
         if "paths" in paths_data:
             # Extract polyline points
             encoded_points = paths_data["paths"][0]["points"]
-
 
             # Decode polyline points
             decoded_points = polyline.decode(encoded_points)
